@@ -15,8 +15,15 @@
             margin: 0;
             min-height: 100vh;
             font-family: Arial, Helvetica, sans-serif;
+
             background:
-                radial-gradient(circle at top, #252525 0%, #0d0d0d 55%, #050505 100%);
+                radial-gradient(
+                    circle at top,
+                    #252525 0%,
+                    #0d0d0d 55%,
+                    #050505 100%
+                );
+
             color: white;
 
             display: flex;
@@ -31,6 +38,7 @@
             max-width: 550px;
 
             background: #111;
+
             border: 1px solid #292929;
             border-radius: 25px;
 
@@ -42,24 +50,32 @@
 
         .logo {
             text-align: center;
+
             font-size: 38px;
             font-weight: 900;
+
             letter-spacing: 4px;
         }
 
         .brand {
             text-align: center;
+
             color: #aaa;
+
             font-size: 12px;
+
             letter-spacing: 2px;
+
             margin-top: 5px;
         }
 
         .vip {
             width: fit-content;
+
             margin: 25px auto 0;
 
             background: #ffcc00;
+
             color: #111;
 
             padding: 9px 18px;
@@ -67,20 +83,26 @@
             border-radius: 30px;
 
             font-size: 15px;
+
             font-weight: 900;
         }
 
         h1 {
             text-align: center;
+
             font-size: 27px;
+
             margin-top: 25px;
             margin-bottom: 10px;
         }
 
         .description {
             text-align: center;
+
             color: #999;
+
             line-height: 1.6;
+
             font-size: 15px;
         }
 
@@ -88,7 +110,9 @@
             margin-top: 30px;
 
             display: flex;
+
             flex-direction: column;
+
             gap: 13px;
         }
 
@@ -96,14 +120,17 @@
             width: 100%;
 
             border: none;
+
             border-radius: 15px;
 
             padding: 18px;
 
             font-size: 17px;
+
             font-weight: bold;
 
             color: white;
+
             background: #222;
 
             cursor: pointer;
@@ -113,6 +140,7 @@
 
         button:hover {
             background: #303030;
+
             transform: translateY(-2px);
         }
 
@@ -126,7 +154,9 @@
 
         button:disabled {
             opacity: 0.5;
+
             cursor: not-allowed;
+
             transform: none;
         }
 
@@ -140,6 +170,7 @@
             text-align: center;
 
             background: #173c21;
+
             color: #9ff0b1;
 
             font-weight: bold;
@@ -156,6 +187,7 @@
 
             font-size: 12px;
         }
+
     </style>
 </head>
 
@@ -215,62 +247,13 @@
 
 </div>
 
-<script>
 
-    /*
-        Şimdilik test amacıyla URL'deki
-        room değerini okuyoruz.
+<!-- SUPABASE KÜTÜPHANESİ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        Örnek:
+<!-- ARENA VIP JAVASCRIPT -->
+<script src="app.js"></script>
 
-        ?room=1
-        ?room=2
-        ?room=3
-        ?room=4
-    */
-
-    const params = new URLSearchParams(window.location.search);
-
-    const room = params.get("room");
-
-    const vipRoom = document.getElementById("vipRoom");
-
-    if (room >= 1 && room <= 4) {
-
-        vipRoom.innerText = "VIP ODA " + room;
-
-    } else {
-
-        vipRoom.innerText = "VIP ODA";
-
-    }
-
-
-    /*
-        Şimdilik butonların çalışmasını
-        test ediyoruz.
-    */
-
-    const buttons = document.querySelectorAll("button");
-
-    const message = document.getElementById("message");
-
-
-    buttons.forEach(function(button) {
-
-        button.addEventListener("click", function() {
-
-            buttons.forEach(function(btn) {
-                btn.disabled = true;
-            });
-
-            message.style.display = "block";
-
-        });
-
-    });
-
-</script>
 
 </body>
 </html>
