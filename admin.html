@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Arena VIP Panel</title>
+
 
     <style>
 
@@ -12,12 +19,17 @@
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
 
             min-height: 100vh;
 
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
             background:
                 radial-gradient(
@@ -28,10 +40,13 @@
                 );
 
             color: white;
+
         }
 
 
-        /* ÜST BAR */
+        /* =========================
+           ÜST BAR
+        ========================= */
 
         .header {
 
@@ -45,7 +60,9 @@
 
             background: #111;
 
-            border-bottom: 1px solid #292929;
+            border-bottom:
+                1px solid #292929;
+
         }
 
 
@@ -56,6 +73,7 @@
             font-weight: 900;
 
             letter-spacing: 4px;
+
         }
 
 
@@ -68,6 +86,7 @@
             letter-spacing: 2px;
 
             margin-top: 4px;
+
         }
 
 
@@ -78,10 +97,13 @@
             font-weight: bold;
 
             color: #ffcc00;
+
         }
 
 
-        /* ANA ALAN */
+        /* =========================
+           ANA ALAN
+        ========================= */
 
         .container {
 
@@ -92,18 +114,84 @@
             margin: auto;
 
             padding: 30px;
+
         }
 
+
+        .toolbar {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .toolbar button {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding:
+                13px 18px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .sound {
+
+            background: #ffcc00;
+
+            color: #111;
+
+        }
+
+
+        .sound:hover {
+
+            background: #ffd633;
+
+        }
+
+
+        .clear {
+
+            background: #242424;
+
+            color: white;
+
+        }
+
+
+        .clear:hover {
+
+            background: #333;
+
+        }
+
+
+        /* =========================
+           BAŞLIK
+        ========================= */
 
         .status {
 
             display: flex;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
 
             align-items: center;
 
             margin-bottom: 25px;
+
         }
 
 
@@ -112,6 +200,7 @@
             margin: 0;
 
             font-size: 28px;
+
         }
 
 
@@ -119,24 +208,36 @@
 
             background: #c91414;
 
-            padding: 7px 13px;
+            padding:
+                7px 13px;
 
             border-radius: 30px;
 
             font-weight: bold;
+
+            min-width: 35px;
+
+            text-align: center;
+
         }
 
 
-        /* ÇAĞRI KARTLARI */
+        /* =========================
+           TALEPLER
+        ========================= */
 
         .requests {
 
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(300px, 1fr));
+                repeat(
+                    auto-fit,
+                    minmax(300px, 1fr)
+                );
 
             gap: 18px;
+
         }
 
 
@@ -144,15 +245,20 @@
 
             background: #151515;
 
-            border: 1px solid #303030;
+            border:
+                1px solid #303030;
 
-            border-left: 5px solid #c91414;
+            border-left:
+                5px solid #c91414;
 
             border-radius: 16px;
 
             padding: 22px;
 
-            box-shadow: 0 10px 30px rgba(0,0,0,.35);
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.35);
+
         }
 
 
@@ -163,6 +269,7 @@
             font-weight: 900;
 
             margin-bottom: 10px;
+
         }
 
 
@@ -173,6 +280,7 @@
             color: #ddd;
 
             margin-bottom: 8px;
+
         }
 
 
@@ -183,6 +291,7 @@
             font-size: 13px;
 
             margin-bottom: 18px;
+
         }
 
 
@@ -205,20 +314,25 @@
             font-weight: bold;
 
             cursor: pointer;
+
         }
 
 
         .complete:hover {
 
             background: #239b4d;
+
         }
 
 
-        /* BOŞ DURUM */
+        /* =========================
+           BOŞ EKRAN
+        ========================= */
 
         .empty {
 
-            grid-column: 1 / -1;
+            grid-column:
+                1 / -1;
 
             padding: 50px 20px;
 
@@ -226,65 +340,29 @@
 
             color: #666;
 
-            border: 1px dashed #333;
+            border:
+                1px dashed #333;
 
             border-radius: 15px;
+
         }
 
 
-        /* BUTONLAR */
-
-        .toolbar {
-
-            display: flex;
-
-            gap: 10px;
-
-            margin-bottom: 25px;
-        }
-
-
-        .toolbar button {
-
-            border: none;
-
-            border-radius: 10px;
-
-            padding: 12px 18px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-
-        .sound {
-
-            background: #ffcc00;
-
-            color: #111;
-        }
-
-
-        .clear {
-
-            background: #242424;
-
-            color: white;
-        }
-
-
-        /* GEÇMİŞ */
+        /* =========================
+           GEÇMİŞ
+        ========================= */
 
         .history {
 
             margin-top: 45px;
+
         }
 
 
         .history h2 {
 
             margin-bottom: 15px;
+
         }
 
 
@@ -292,23 +370,30 @@
 
             display: flex;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
+
+            gap: 20px;
 
             padding: 15px;
 
             background: #121212;
 
-            border: 1px solid #252525;
+            border:
+                1px solid #252525;
 
             border-radius: 10px;
 
             margin-bottom: 8px;
 
             color: #888;
+
         }
 
 
-        /* MOBİL */
+        /* =========================
+           MOBİL
+        ========================= */
 
         @media(max-width:700px) {
 
@@ -319,32 +404,67 @@
                 align-items: flex-start;
 
                 gap: 12px;
+
             }
 
 
             .container {
 
                 padding: 20px;
+
             }
 
 
             .status {
 
-                align-items: flex-start;
+                align-items:
+                    flex-start;
 
                 gap: 15px;
 
-                flex-direction: column;
+                flex-direction:
+                    column;
+
+            }
+
+
+            .toolbar {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .toolbar button {
+
+                width: 100%;
+
+            }
+
+
+            .history-item {
+
+                flex-direction:
+                    column;
+
+                gap: 5px;
+
             }
 
         }
 
     </style>
+
 </head>
 
 
 <body>
 
+
+<!-- =========================
+     ÜST BAR
+========================= -->
 
 <header class="header">
 
@@ -362,22 +482,30 @@
 
 
     <div class="panel-title">
+
         VIP PERSONEL PANELİ
+
     </div>
 
 </header>
 
 
 
+<!-- =========================
+     ANA İÇERİK
+========================= -->
+
 <main class="container">
 
+
+    <!-- BUTONLAR -->
 
     <div class="toolbar">
 
         <button
             class="sound"
-            onclick="enableSound()"
-            id="soundButton">
+            id="soundButton"
+        >
 
             🔊 Sesi Etkinleştir
 
@@ -386,9 +514,10 @@
 
         <button
             class="clear"
-            onclick="clearHistory()">
+            id="clearButton"
+        >
 
-            Geçmişi Temizle
+            🗑️ Geçmişi Temizle
 
         </button>
 
@@ -396,15 +525,19 @@
 
 
 
+    <!-- BEKLEYEN TALEPLER -->
+
     <div class="status">
 
         <h1>
             Bekleyen Talepler
         </h1>
 
+
         <div
             class="count"
-            id="requestCount">
+            id="requestCount"
+        >
 
             0
 
@@ -416,17 +549,21 @@
 
     <div
         class="requests"
-        id="requests">
+        id="requests"
+    >
 
         <div class="empty">
 
-            Şu anda bekleyen VIP çağrısı bulunmuyor.
+            Bekleyen VIP çağrıları
+            yükleniyor...
 
         </div>
 
     </div>
 
 
+
+    <!-- GEÇMİŞ -->
 
     <section class="history">
 
@@ -439,7 +576,7 @@
 
             <div class="empty">
 
-                Henüz tamamlanan talep yok.
+                Geçmiş yükleniyor...
 
             </div>
 
@@ -452,127 +589,22 @@
 
 
 
-<script>
+<!-- =========================
+     SUPABASE
+========================= -->
 
-    /*
-        ŞİMDİLİK TEST PANELİ
-
-        Gerçek Supabase bağlantısını
-        bir sonraki aşamada ekleyeceğiz.
-    */
-
-
-    let soundEnabled = false;
-
-
-    function enableSound() {
-
-        soundEnabled = true;
-
-        const button =
-            document.getElementById("soundButton");
-
-
-        button.innerText =
-            "🔊 Ses Aktif";
-
-
-        button.disabled = true;
-
-    }
-
-
-    function clearHistory() {
-
-        alert(
-            "Geçmiş temizleme özelliği Supabase bağlantısından sonra aktif olacak."
-        );
-
-    }
-
-
-    /*
-        TEST AMAÇLI ÖRNEK ÇAĞRI
-
-        Şimdilik ekranda herhangi
-        bir çağrı göstermiyoruz.
-    */
-
-
-    function testRequest() {
-
-        const container =
-            document.getElementById("requests");
-
-
-        container.innerHTML = `
-
-            <div class="request">
-
-                <div class="room">
-                    VIP ODA 1
-                </div>
-
-                <div class="type">
-                    🔴 Personel Çağırıyor
-                </div>
-
-                <div class="time">
-                    Şimdi
-                </div>
-
-                <button
-                    class="complete"
-                    onclick="completeTest()">
-
-                    ✓ TAMAMLANDI
-
-                </button>
-
-            </div>
-
-        `;
-
-
-        document.getElementById(
-            "requestCount"
-        ).innerText = "1";
-
-
-        if(soundEnabled) {
-
-            alert(
-                "🔔 VIP 1 personel çağırıyor!"
-            );
-
-        }
-
-    }
-
-
-    function completeTest() {
-
-        document.getElementById(
-            "requests"
-        ).innerHTML = `
-
-            <div class="empty">
-
-                Şu anda bekleyen VIP çağrısı bulunmuyor.
-
-            </div>
-
-        `;
-
-
-        document.getElementById(
-            "requestCount"
-        ).innerText = "0";
-
-    }
-
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
 
 
+<!-- =========================
+     ARENA VIP JAVASCRIPT
+========================= -->
+
+<script src="app.js"></script>
+
+
 </body>
+
 </html>
