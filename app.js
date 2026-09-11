@@ -1,53 +1,94 @@
+// ======================================================
+// ARENA PLAYSTATION SIMRACING
+// VIP ÇAĞRI SİSTEMİ
+// ======================================================
+
+
+// ======================================================
+// SUPABASE
+// ======================================================
+
 const SUPABASE_URL =
     "https://ngpcywxleniznketgipz.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_1KvkDwQCCkh0BntMLYJwgA_s6Kzeb3A";
 
+const db =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+
+// ======================================================
+// GENEL DEĞİŞKENLER
+// ======================================================
+
+let audioContext = null;
+
+let soundEnabled = false;
+
+let previousPendingIds = new Set();
+
+let firstLoad = true;
 
 
-// =====================================================
-// MÜŞTERİ TARAFI
-// =====================================================
+// ======================================================
+// URL / ODA
+// ======================================================
 
 const params =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+        window.location.search
+    );
 
 const room =
-    Number(params.get("room"));
+    Number(
+        params.get("room")
+    );
 
+
+// ======================================================
+// TALEP TÜRLERİ
+// ======================================================
 
 const requestTypes = {
 
-    personel: "Personel Çağırıyor",
+    personel:
+        "Personel Çağırıyor",
 
-    teknik: "Teknik Destek İstiyor",
+    teknik:
+        "Teknik Destek İstiyor",
 
-    servis: "Servis İstiyor",
+    servis:
+        "Servis İstiyor",
 
-    hesap: "Hesap İstiyor"
+    hesap:
+        "Hesap İstiyor"
 
 };
 
 
-// VIP odası bilgisi
+// ======================================================
+// VIP ODA
+// ======================================================
 
 function setupRoom() {
 
     const badge =
-        document.getElementById("vipRoom");
+        document.getElementById(
+            "vipRoom"
+        );
 
     if (!badge) {
         return;
     }
 
-
-    if (room >= 1 && room <= 4) {
+    if (
+        room >= 1 &&
+        room <= 4
+    ) {
 
         badge.innerText =
             "VIP ODA " + room;
@@ -62,17 +103,23 @@ function setupRoom() {
 }
 
 
-// Talep gönder
+// ======================================================
+// MÜŞTERİ TALEBİ GÖNDER
+// ======================================================
 
 async function sendRequest(type) {
 
-    if (!(room >= 1 && room <= 4)) {
+    if (
+        room < 1 ||
+        room > 4
+    ) {
 
         alert(
             "VIP oda bilgisi bulunamadı."
         );
 
         return;
+
     }
 
 
@@ -82,34 +129,45 @@ async function sendRequest(type) {
         );
 
 
-    buttons.forEach(function(button) {
+    buttons.forEach(
+        function(button) {
 
-        button.disabled = true;
+            button.disabled = true;
 
-    });
+        }
+    );
 
 
     try {
 
-        const { error } =
+        const {
+            error
+        } =
 
             await db
-                .from("vip_requests")
+                .from(
+                    "vip_requests"
+                )
                 .insert({
 
-                    room_number: room,
+                    room_number:
+                        room,
 
                     request_type:
                         requestTypes[type],
 
-                    status: "pending"
+                    status:
+                        "pending"
 
                 });
 
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Supabase:",
+                error
+            );
 
             throw error;
 
@@ -117,20 +175,28 @@ async function sendRequest(type) {
 
 
         const message =
-            document.getElementById("message");
+            document.getElementById(
+                "message"
+            );
 
 
-        message.innerText =
-            "Talebiniz alındı. Personelimiz birazdan yanınıza gelecektir.";
+        if (message) {
 
+            message.innerText =
+                "✓ Talebiniz alındı. Personelimiz birazdan yanınıza gelecektir.";
 
-        message.style.display =
-            "block";
+            message.style.display =
+                "block";
+
+        }
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Talep gönderilemedi:",
+            error
+        );
 
 
         alert(
@@ -138,18 +204,23 @@ async function sendRequest(type) {
         );
 
 
-        buttons.forEach(function(button) {
+        buttons.forEach(
+            function(button) {
 
-            button.disabled = false;
+                button.disabled =
+                    false;
 
-        });
+            }
+        );
 
     }
 
 }
 
 
-// Müşteri butonları
+// ======================================================
+// MÜŞTERİ BUTONLARI
+// ======================================================
 
 function setupCustomerButtons() {
 
@@ -159,8 +230,13 @@ function setupCustomerButtons() {
         );
 
 
-    if (!buttons.length) {
+    if (
+        !buttons ||
+        buttons.length < 4
+    ) {
+
         return;
+
     }
 
 
@@ -168,7 +244,9 @@ function setupCustomerButtons() {
         "click",
         function() {
 
-            sendRequest("personel");
+            sendRequest(
+                "personel"
+            );
 
         }
     );
@@ -178,7 +256,9 @@ function setupCustomerButtons() {
         "click",
         function() {
 
-            sendRequest("teknik");
+            sendRequest(
+                "teknik"
+            );
 
         }
     );
@@ -188,7 +268,9 @@ function setupCustomerButtons() {
         "click",
         function() {
 
-            sendRequest("servis");
+            sendRequest(
+                "servis"
+            );
 
         }
     );
@@ -198,7 +280,9 @@ function setupCustomerButtons() {
         "click",
         function() {
 
-            sendRequest("hesap");
+            sendRequest(
+                "hesap"
+            );
 
         }
     );
@@ -206,34 +290,23 @@ function setupCustomerButtons() {
 }
 
 
-// =====================================================
-// PERSONEL PANELİ
-// =====================================================
+// ======================================================
+// SES SİSTEMİ
+// ======================================================
 
-
-let soundEnabled =
-    false;
-
-
-let audioContext =
-    null;
-
-
-let previousPending =
-    new Set();
-
-
-// Ses sistemini aç
-
-function enableSound() {
+async function enableSound() {
 
     try {
 
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+        if (!audioContext) {
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
 
 
         if (
@@ -241,7 +314,7 @@ function enableSound() {
             "suspended"
         ) {
 
-            audioContext.resume();
+            await audioContext.resume();
 
         }
 
@@ -259,28 +332,57 @@ function enableSound() {
         if (button) {
 
             button.innerText =
-                "🔊 Ses Aktif";
+                "🔊 SES AKTİF";
 
             button.disabled =
                 true;
 
         }
 
+
+        // SES TESTİ
+
+        playNotificationSound();
+
+
+        console.log(
+            "Arena ses sistemi aktif."
+        );
+
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Ses sistemi hatası:",
+            error
+        );
+
+
+        alert(
+            "Ses sistemi başlatılamadı."
+        );
 
     }
 
 }
 
 
-// Yeni çağrı geldiğinde ses
+// ======================================================
+// GÜÇLÜ BİLDİRİM SESİ
+// ======================================================
 
 function playNotificationSound() {
 
     if (
-        !soundEnabled ||
+        !soundEnabled
+    ) {
+
+        return;
+
+    }
+
+
+    if (
         !audioContext
     ) {
 
@@ -289,70 +391,246 @@ function playNotificationSound() {
     }
 
 
-    const oscillator =
+    const now =
+        audioContext.currentTime;
+
+
+    // --------------------------------------------------
+    // ANA SES
+    // --------------------------------------------------
+
+    const oscillator1 =
         audioContext.createOscillator();
 
-
-    const gain =
+    const gain1 =
         audioContext.createGain();
 
 
-    oscillator.connect(gain);
+    oscillator1.type =
+        "square";
 
-    gain.connect(
+
+    oscillator1.frequency.setValueAtTime(
+        880,
+        now
+    );
+
+
+    oscillator1.connect(
+        gain1
+    );
+
+
+    gain1.connect(
         audioContext.destination
     );
 
 
-    oscillator.frequency.value =
-        880;
-
-
-    gain.gain.setValueAtTime(
+    gain1.gain.setValueAtTime(
         0.0001,
-        audioContext.currentTime
+        now
     );
 
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.25,
-        audioContext.currentTime + 0.03
+    gain1.gain.exponentialRampToValueAtTime(
+        0.45,
+        now + 0.02
     );
 
 
-    gain.gain.exponentialRampToValueAtTime(
+    gain1.gain.exponentialRampToValueAtTime(
         0.0001,
-        audioContext.currentTime + 0.7
+        now + 0.30
     );
 
 
-    oscillator.start();
+    oscillator1.start(
+        now
+    );
 
 
-    oscillator.stop(
-        audioContext.currentTime + 0.75
+    oscillator1.stop(
+        now + 0.32
+    );
+
+
+    // --------------------------------------------------
+    // İKİNCİ SES
+    // --------------------------------------------------
+
+    const oscillator2 =
+        audioContext.createOscillator();
+
+    const gain2 =
+        audioContext.createGain();
+
+
+    oscillator2.type =
+        "square";
+
+
+    oscillator2.frequency.setValueAtTime(
+        660,
+        now + 0.35
+    );
+
+
+    oscillator2.connect(
+        gain2
+    );
+
+
+    gain2.connect(
+        audioContext.destination
+    );
+
+
+    gain2.gain.setValueAtTime(
+        0.0001,
+        now + 0.35
+    );
+
+
+    gain2.gain.exponentialRampToValueAtTime(
+        0.45,
+        now + 0.38
+    );
+
+
+    gain2.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.68
+    );
+
+
+    oscillator2.start(
+        now + 0.35
+    );
+
+
+    oscillator2.stop(
+        now + 0.70
+    );
+
+
+    // --------------------------------------------------
+    // ÜÇÜNCÜ UYARI SESİ
+    // --------------------------------------------------
+
+    const oscillator3 =
+        audioContext.createOscillator();
+
+    const gain3 =
+        audioContext.createGain();
+
+
+    oscillator3.type =
+        "square";
+
+
+    oscillator3.frequency.setValueAtTime(
+        990,
+        now + 0.75
+    );
+
+
+    oscillator3.connect(
+        gain3
+    );
+
+
+    gain3.connect(
+        audioContext.destination
+    );
+
+
+    gain3.gain.setValueAtTime(
+        0.0001,
+        now + 0.75
+    );
+
+
+    gain3.gain.exponentialRampToValueAtTime(
+        0.50,
+        now + 0.78
+    );
+
+
+    gain3.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 1.15
+    );
+
+
+    oscillator3.start(
+        now + 0.75
+    );
+
+
+    oscillator3.stop(
+        now + 1.20
     );
 
 }
 
 
-// Saat
+// ======================================================
+// TEKRARLI UYARI
+// ======================================================
+
+function playStrongNotification() {
+
+    playNotificationSound();
+
+
+    setTimeout(
+        function() {
+
+            if (
+                soundEnabled
+            ) {
+
+                playNotificationSound();
+
+            }
+
+        },
+        1500
+    );
+
+}
+
+
+// ======================================================
+// SAAT
+// ======================================================
 
 function formatTime(date) {
 
-    return new Date(date)
-        .toLocaleTimeString(
-            "tr-TR",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
+    return new Date(
+        date
+    ).toLocaleTimeString(
+        "tr-TR",
+        {
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit",
+
+            second:
+                "2-digit"
+
+        }
+    );
 
 }
 
 
-// HTML güvenliği
+// ======================================================
+// HTML GÜVENLİĞİ
+// ======================================================
 
 function escapeHTML(text) {
 
@@ -363,17 +641,23 @@ function escapeHTML(text) {
 
                 const map = {
 
-                    "&": "&amp;",
+                    "&":
+                        "&amp;",
 
-                    "<": "&lt;",
+                    "<":
+                        "&lt;",
 
-                    ">": "&gt;",
+                    ">":
+                        "&gt;",
 
-                    '"': "&quot;",
+                    '"':
+                        "&quot;",
 
-                    "'": "&#039;"
+                    "'":
+                        "&#039;"
 
                 };
+
 
                 return map[
                     character
@@ -385,7 +669,9 @@ function escapeHTML(text) {
 }
 
 
-// Bekleyen çağrıları getir
+// ======================================================
+// TALEPLERİ GETİR
+// ======================================================
 
 async function loadRequests() {
 
@@ -414,174 +700,256 @@ async function loadRequests() {
     }
 
 
-    const { data, error } =
+    try {
 
-        await db
-            .from("vip_requests")
-            .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending: false
+        const {
+            data,
+            error
+        } =
+
+            await db
+                .from(
+                    "vip_requests"
+                )
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending:
+                            false
+                    }
+                )
+                .limit(100);
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        const pending =
+            data.filter(
+                function(item) {
+
+                    return (
+                        item.status ===
+                        "pending"
+                    );
+
                 }
+            );
+
+
+        const completed =
+            data.filter(
+                function(item) {
+
+                    return (
+                        item.status !==
+                        "pending"
+                    );
+
+                }
+            );
+
+
+        // ==================================================
+        // YENİ ÇAĞRI KONTROLÜ
+        // ==================================================
+
+        const currentPendingIds =
+            new Set(
+                pending.map(
+                    function(item) {
+
+                        return item.id;
+
+                    }
+                )
+            );
+
+
+        // İlk açılışta ses çalma.
+
+        if (
+            !firstLoad
+        ) {
+
+            let newRequest =
+                false;
+
+
+            currentPendingIds.forEach(
+                function(id) {
+
+                    if (
+                        !previousPendingIds.has(
+                            id
+                        )
+                    ) {
+
+                        newRequest =
+                            true;
+
+                    }
+
+                }
+            );
+
+
+            if (
+                newRequest
+            ) {
+
+                playStrongNotification();
+
+            }
+
+        }
+
+
+        previousPendingIds =
+            currentPendingIds;
+
+
+        firstLoad =
+            false;
+
+
+        // ==================================================
+        // SAYI
+        // ==================================================
+
+        if (count) {
+
+            count.innerText =
+                pending.length;
+
+        }
+
+
+        // ==================================================
+        // BEKLEYENLER
+        // ==================================================
+
+        if (
+            pending.length === 0
+        ) {
+
+            requestsContainer.innerHTML = `
+
+                <div class="empty">
+
+                    Şu anda bekleyen
+                    VIP çağrısı bulunmuyor.
+
+                </div>
+
+            `;
+
+        } else {
+
+            requestsContainer.innerHTML =
+
+                pending
+                    .map(
+                        createRequestHTML
+                    )
+                    .join("");
+
+        }
+
+
+        // ==================================================
+        // GEÇMİŞ
+        // ==================================================
+
+        if (
+            historyContainer
+        ) {
+
+            if (
+                completed.length === 0
+            ) {
+
+                historyContainer.innerHTML = `
+
+                    <div class="empty">
+
+                        Henüz tamamlanan
+                        talep yok.
+
+                    </div>
+
+                `;
+
+            } else {
+
+                historyContainer.innerHTML =
+
+                    completed
+                        .slice(
+                            0,
+                            30
+                        )
+                        .map(
+                            createHistoryHTML
+                        )
+                        .join("");
+
+            }
+
+        }
+
+
+        // ==================================================
+        // TAMAMLANDI BUTONLARI
+        // ==================================================
+
+        document
+            .querySelectorAll(
+                ".complete"
             )
-            .limit(100);
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        completeRequest
+                    );
+
+                }
+            );
 
 
-    if (error) {
+    } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Talepler yüklenemedi:",
+            error
+        );
+
 
         requestsContainer.innerHTML = `
 
             <div class="empty">
 
-                Supabase bağlantısı kurulamadı.
-
-                <br><br>
-
-                Ayarlarınızı kontrol edin.
+                ❌ Talepler yüklenemedi.
 
             </div>
 
         `;
 
-        return;
-
     }
-
-
-    const pending =
-        data.filter(function(item) {
-
-            return item.status === "pending";
-
-        });
-
-
-    const completed =
-        data.filter(function(item) {
-
-            return item.status !== "pending";
-
-        });
-
-
-    // Yeni çağrı kontrolü
-
-    const currentPending =
-        new Set(
-            pending.map(
-                item => item.id
-            )
-        );
-
-
-    if (
-        previousPending.size > 0
-    ) {
-
-        currentPending.forEach(
-            function(id) {
-
-                if (
-                    !previousPending.has(id)
-                ) {
-
-                    playNotificationSound();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    previousPending =
-        currentPending;
-
-
-    count.innerText =
-        pending.length;
-
-
-    // Bekleyenler
-
-    if (!pending.length) {
-
-        requestsContainer.innerHTML = `
-
-            <div class="empty">
-
-                Şu anda bekleyen VIP çağrısı bulunmuyor.
-
-            </div>
-
-        `;
-
-    } else {
-
-        requestsContainer.innerHTML =
-
-            pending
-                .map(
-                    createRequestHTML
-                )
-                .join("");
-
-    }
-
-
-    // Geçmiş
-
-    if (!completed.length) {
-
-        historyContainer.innerHTML = `
-
-            <div class="empty">
-
-                Henüz tamamlanan talep yok.
-
-            </div>
-
-        `;
-
-    } else {
-
-        historyContainer.innerHTML =
-
-            completed
-                .slice(0, 30)
-                .map(
-                    createHistoryHTML
-                )
-                .join("");
-
-    }
-
-
-    // Tamamlandı butonları
-
-    document
-        .querySelectorAll(
-            ".complete"
-        )
-        .forEach(
-            function(button) {
-
-                button.addEventListener(
-                    "click",
-                    completeRequest
-                );
-
-            }
-        );
 
 }
 
 
-// Bekleyen çağrı kartı
+// ======================================================
+// TALEP KARTI
+// ======================================================
 
 function createRequestHTML(item) {
 
@@ -608,6 +976,7 @@ function createRequestHTML(item) {
 
             <div class="time">
 
+                🕐
                 ${formatTime(
                     item.created_at
                 )}
@@ -616,10 +985,9 @@ function createRequestHTML(item) {
 
 
             <button
-
                 class="complete"
-
-                data-id="${item.id}">
+                data-id="${item.id}"
+            >
 
                 ✓ TAMAMLANDI
 
@@ -632,7 +1000,9 @@ function createRequestHTML(item) {
 }
 
 
-// Geçmiş kartı
+// ======================================================
+// GEÇMİŞ
+// ======================================================
 
 function createHistoryHTML(item) {
 
@@ -644,7 +1014,7 @@ function createHistoryHTML(item) {
 
                 VIP ${item.room_number}
 
-                • 
+                •
 
                 ${escapeHTML(
                     item.request_type
@@ -668,53 +1038,75 @@ function createHistoryHTML(item) {
 }
 
 
-// Talebi tamamla
+// ======================================================
+// TALEBİ TAMAMLA
+// ======================================================
 
 async function completeRequest(event) {
 
     const id =
         Number(
-            event.currentTarget.dataset.id
+            event.currentTarget
+                .dataset
+                .id
         );
 
 
-    const { error } =
+    try {
 
-        await db
-            .from("vip_requests")
-            .update({
+        const {
+            error
+        } =
 
-                status: "completed",
+            await db
+                .from(
+                    "vip_requests"
+                )
+                .update({
 
-                completed_at:
-                    new Date().toISOString()
+                    status:
+                        "completed",
 
-            })
-            .eq(
-                "id",
-                id
-            );
+                    completed_at:
+                        new Date()
+                            .toISOString()
+
+                })
+                .eq(
+                    "id",
+                    id
+                );
 
 
-    if (error) {
+        if (error) {
 
-        console.error(error);
+            throw error;
+
+        }
+
+
+        await loadRequests();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
 
         alert(
             "Talep tamamlanamadı."
         );
 
-        return;
-
     }
-
-
-    loadRequests();
 
 }
 
 
-// Geçmişi temizle
+// ======================================================
+// GEÇMİŞİ TEMİZLE
+// ======================================================
 
 async function clearHistory() {
 
@@ -731,126 +1123,201 @@ async function clearHistory() {
     }
 
 
-    const { error } =
+    try {
 
-        await db
-            .from("vip_requests")
-            .delete()
-            .neq(
-                "status",
-                "pending"
-            );
+        const {
+            error
+        } =
+
+            await db
+                .from(
+                    "vip_requests"
+                )
+                .delete()
+                .neq(
+                    "status",
+                    "pending"
+                );
 
 
-    if (error) {
+        if (error) {
 
-        console.error(error);
+            throw error;
+
+        }
+
+
+        await loadRequests();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
 
         alert(
             "Geçmiş temizlenemedi."
         );
 
-        return;
-
     }
-
-
-    loadRequests();
 
 }
 
 
-// =====================================================
-// GERÇEK ZAMANLI SUPABASE BAĞLANTISI
-// =====================================================
+// ======================================================
+// REALTIME
+// ======================================================
 
 function startRealtime() {
+
+    console.log(
+        "Arena Realtime başlatılıyor..."
+    );
+
 
     db.channel(
         "arena-vip-realtime"
     )
 
-    .on(
 
-        "postgres_changes",
+        .on(
 
-        {
+            "postgres_changes",
 
-            event: "*",
+            {
 
-            schema: "public",
+                event:
+                    "*",
 
-            table: "vip_requests"
+                schema:
+                    "public",
 
-        },
+                table:
+                    "vip_requests"
 
-        function() {
+            },
+
+            function(payload) {
+
+                console.log(
+                    "Yeni Supabase olayı:",
+                    payload
+                );
+
+
+                loadRequests();
+
+            }
+
+        )
+
+
+        .subscribe(
+            function(status) {
+
+                console.log(
+                    "Realtime:",
+                    status
+                );
+
+            }
+        );
+
+}
+
+
+// ======================================================
+// SAYFA BAŞLANGICI
+// ======================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+
+        // ==================================================
+        // ADMIN PANELİ
+        // ==================================================
+
+        const requests =
+            document.getElementById(
+                "requests"
+            );
+
+
+        if (requests) {
+
+
+            // SES BUTONU
+
+            const soundButton =
+                document.getElementById(
+                    "soundButton"
+                );
+
+
+            if (soundButton) {
+
+                soundButton.addEventListener(
+                    "click",
+                    enableSound
+                );
+
+            }
+
+
+            // GEÇMİŞİ TEMİZLE
+
+            const clearButton =
+                document.querySelector(
+                    ".clear"
+                );
+
+
+            if (clearButton) {
+
+                clearButton.addEventListener(
+                    "click",
+                    clearHistory
+                );
+
+            }
+
+
+            // TALEPLER
 
             loadRequests();
 
+
+            // REALTIME
+
+            startRealtime();
+
+
+            console.log(
+                "Arena VIP Paneli hazır."
+            );
+
+
+        } else {
+
+
+            // ==================================================
+            // VIP MÜŞTERİ SAYFASI
+            // ==================================================
+
+            setupRoom();
+
+            setupCustomerButtons();
+
+
+            console.log(
+                "Arena VIP müşteri ekranı hazır."
+            );
+
         }
 
-    )
-
-    .subscribe();
-
-}
-
-
-// =====================================================
-// SAYFA BAŞLANGICI
-// =====================================================
-
-if (
-    document.getElementById(
-        "requests"
-    )
-) {
-
-    // PERSONEL PANELİ
-
-    const soundButton =
-        document.getElementById(
-            "soundButton"
-        );
-
-
-    if (soundButton) {
-
-        soundButton.addEventListener(
-            "click",
-            enableSound
-        );
-
     }
-
-
-    const clearButton =
-        document.querySelector(
-            ".clear"
-        );
-
-
-    if (clearButton) {
-
-        clearButton.addEventListener(
-            "click",
-            clearHistory
-        );
-
-    }
-
-
-    loadRequests();
-
-    startRealtime();
-
-} else {
-
-    // MÜŞTERİ EKRANI
-
-    setupRoom();
-
-    setupCustomerButtons();
-
-}
+);
