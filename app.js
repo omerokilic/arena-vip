@@ -196,7 +196,7 @@ function setupCustomerButtons() {
     buttons[0].addEventListener("click", () => sendRequest("personel"));
     buttons[1].addEventListener("click", () => sendRequest("teknik"));
     
-    // 3. BUTON: Servis iste (Artık menüyü açacak)
+    // 3. BUTON: Menü Ve Sipariş (Artık menüyü açacak)
     buttons[2].addEventListener("click", () => openMenuModal());
     
     buttons[3].addEventListener("click", () => sendRequest("hesap"));
