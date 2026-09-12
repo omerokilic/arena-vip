@@ -86,7 +86,7 @@ const room = Number(params.get("room"));
 const requestTypes = {
     personel: "Personel Çağırıyor",
     teknik: "Teknik Destek İstiyor",
-    servis: "Servis İstiyor", // Artık menü için kullanılıyor, doğrudan gönderilmeyecek
+    servis: "Menü ve Sipariş", // Artık menü için kullanılıyor, doğrudan gönderilmeyecek
     hesap: "Fiyat Bilgisi"
 };
 
