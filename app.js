@@ -11,40 +11,40 @@ const menuData = [
     {
         category: "Soğuk İçecekler",
         items: [
-            { id: "s1", name: "Teneke Kola", price: 40, icon: "🥤" },
-            { id: "s2", name: "Redbull", price: 60, icon: "⚡" },
-            { id: "s3", name: "Blackburn", price: 50, icon: "🔋" },
-            { id: "s4", name: "Meyve Suyu", price: 30, icon: "🧃" },
-            { id: "s5", name: "Soğuk Çay", price: 35, icon: "🍹" },
-            { id: "s6", name: "Meyveli Soda", price: 25, icon: "🍾" },
-            { id: "s7", name: "Sade Soda", price: 20, icon: "🧊" },
-            { id: "s8", name: "Su", price: 10, icon: "💧" },
-            { id: "s9", name: "Soğuk Kahve", price: 55, icon: "🧋" }
+            { id: "s1", name: "Teneke Kola", price: 60, icon: "🥤" },
+            { id: "s2", name: "Redbull", price: 100, icon: "⚡" },
+            { id: "s3", name: "Blackburn", price: 60, icon: "🔋" },
+            { id: "s4", name: "Meyve Suyu", price: 60, icon: "🧃" },
+            { id: "s5", name: "Soğuk Çay", price: 60, icon: "🍹" },
+            { id: "s6", name: "Meyveli Soda", price: 30, icon: "🍾" },
+            { id: "s7", name: "Sade Soda", price: 30, icon: "🧊" },
+            { id: "s8", name: "Su", price: 15, icon: "💧" },
+            { id: "s9", name: "Soğuk Kahve", price: 100, icon: "🧋" }
         ]
     },
     {
         category: "Sıcak İçecekler",
         items: [
-            { id: "h1", name: "Çay", price: 15, icon: "☕" },
-            { id: "h2", name: "Kahve", price: 40, icon: "☕" },
-            { id: "h3", name: "Oralet", price: 15, icon: "🍊" }
+            { id: "h1", name: "Çay", price: 20, icon: "☕" },
+            { id: "h2", name: "Kahve", price: 30, icon: "☕" },
+            { id: "h3", name: "Oralet", price: 30, icon: "🍊" }
         ]
     },
     {
         category: "Atıştırmalıklar",
         items: [
-            { id: "a1", name: "Tam Karışık Tost", price: 120, icon: "🥪" },
-            { id: "a2", name: "Yarım Karışık Tost", price: 70, icon: "🥪" },
-            { id: "a3", name: "Tam Sucuklu Tost", price: 110, icon: "🥪" },
-            { id: "a4", name: "Yarım Sucuklu Tost", price: 65, icon: "🥪" },
-            { id: "a5", name: "Tam Kaşarlı Tost", price: 100, icon: "🥪" },
-            { id: "a6", name: "Yarım Kaşarlı Tost", price: 60, icon: "🥪" },
-            { id: "a7", name: "Çikolata", price: 30, icon: "🍫" },
-            { id: "a8", name: "Bisküvi", price: 25, icon: "🍪" },
-            { id: "a9", name: "Jelibon", price: 25, icon: "🍬" },
-            { id: "a10", name: "Kovada Cips", price: 60, icon: "🍿" },
-            { id: "a11", name: "Paket Cips", price: 40, icon: "🥔" },
-            { id: "a12", name: "Kek", price: 20, icon: "🧁" }
+            { id: "a1", name: "Tam Karışık Tost", price: 200, icon: "🥪" },
+            { id: "a2", name: "Yarım Karışık Tost", price: 100, icon: "🥪" },
+            { id: "a3", name: "Tam Sucuklu Tost", price: 180, icon: "🥪" },
+            { id: "a4", name: "Yarım Sucuklu Tost", price: 90, icon: "🥪" },
+            { id: "a5", name: "Tam Kaşarlı Tost", price: 180, icon: "🥪" },
+            { id: "a6", name: "Yarım Kaşarlı Tost", price: 90, icon: "🥪" },
+            { id: "a7", name: "Çikolata", price: 35, icon: "🍫" },
+            { id: "a8", name: "Bisküvi", price: 45, icon: "🍪" },
+            { id: "a9", name: "Jelibon", price: 40, icon: "🍬" },
+            { id: "a10", name: "Kovada Cips", price: 150, icon: "🍿" },
+            { id: "a11", name: "Paket Cips", price: 80, icon: "🥔" },
+            { id: "a12", name: "Kek", price: 25, icon: "🧁" }
         ]
     }
 ];
@@ -87,7 +87,7 @@ const requestTypes = {
     personel: "Personel Çağırıyor",
     teknik: "Teknik Destek İstiyor",
     servis: "Servis İstiyor", // Artık menü için kullanılıyor, doğrudan gönderilmeyecek
-    hesap: "Hesap İstiyor"
+    hesap: "Fiyat Bilgisi"
 };
 
 
